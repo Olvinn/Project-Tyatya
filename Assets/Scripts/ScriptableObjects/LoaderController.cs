@@ -61,4 +61,9 @@ public class LoaderController : ScriptableObject
     {
         AsyncOperation proc = SceneManager.LoadSceneAsync(mainMenu, LoadSceneMode.Single);
     }
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
 }
