@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
         _rb.gravityScale = 1;
     }
 
-    void FixedUpdate()
+    void Update()
     {
         x1 = transform.position;
         v = (x1 - x0) / Time.deltaTime;
@@ -33,8 +33,8 @@ public class PlayerController : MonoBehaviour
         float lr = -Input.GetAxis("Horizontal");
         //angle -= lr * Time.deltaTime * speed;
         //Physics2D.gravity = new Vector2(Mathf.Sin(angle * Mathf.Deg2Rad), Mathf.Cos(angle * Mathf.Deg2Rad)) * Physics2D.gravity.magnitude;
-        _rb.angularVelocity = speed * lr * 1000f * Time.fixedDeltaTime;
-        _rb.velocity += (Vector2)(Quaternion.Euler(0, 0, -90) * Physics2D.gravity.normalized) * speed * lr *.05f * Time.fixedDeltaTime;
+        _rb.angularVelocity = speed * lr * 1000f * Time.deltaTime;
+        _rb.velocity += (Vector2)(Quaternion.Euler(0, 0, -90) * Physics2D.gravity.normalized) * speed * lr *.05f * Time.deltaTime;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
