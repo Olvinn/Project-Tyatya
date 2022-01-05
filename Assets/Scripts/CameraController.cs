@@ -1,10 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class CameraController : MonoBehaviour
 {
     [SerializeField] PlayerController pc;
+    [SerializeField] Volume vol;
+    Vignette vignette;
 
     public float minCamSize = 5;
     public float vShake;
@@ -15,6 +19,7 @@ public class CameraController : MonoBehaviour
     {
         _gAngle = 180;
         pc.onCollide.AddListener(CollisionReact);
+        vol.profile.TryGet(out vignette);
     }
 
     void LateUpdate()
@@ -29,14 +34,16 @@ public class CameraController : MonoBehaviour
         Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, temp, Time.deltaTime);
         Camera.main.transform.rotation = Quaternion.Euler(0, 0, 180 + _gAngle);
         Camera.main.orthographicSize = Mathf.Max(minCamSize, Mathf.Lerp(Camera.main.orthographicSize, pc.v.magnitude, Time.deltaTime));
-        Camera.main.backgroundColor = Vector4.MoveTowards(Camera.main.backgroundColor, Color.black, Time.deltaTime * .5f);
+        vignette.intensity.value = Mathf.Lerp(vignette.intensity.value, 0, Time.deltaTime * .5f);
     }
 
     void CollisionReact(float power, Color color)
     {
-        StartCoroutine(Shaker(power, Camera.main.orthographicSize * .05f));
+        //StopAllCoroutines();
+        StartCoroutine(Shaker(power, Camera.main.orthographicSize * .01f));
         power = Mathf.Min(power, 1);
-        Camera.main.backgroundColor = Color.Lerp(Camera.main.backgroundColor, color, power);
+        vignette.intensity.value = power;
+        vignette.color.value = color;
     }
 
     IEnumerator Shaker(float power, float bias)
@@ -46,7 +53,7 @@ public class CameraController : MonoBehaviour
             Vector2 offset = Random.insideUnitCircle * power * bias;
             Camera.main.transform.position += (Vector3)offset;
 
-            power -= Time.unscaledDeltaTime * .5f;
+            power = Mathf.Lerp(power, 0, Time.unscaledDeltaTime * 5);
             bias -= Time.unscaledDeltaTime;
 
             yield return new WaitForEndOfFrame();

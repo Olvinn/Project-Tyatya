@@ -715,6 +715,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pc: {fileID: 643506204}
+  vol: {fileID: 1040052609}
   minCamSize: 10
   vShake: 0.001
 --- !u!1 &1234600430

@@ -356,9 +356,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 832f517460b152047b66132ea78f451b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 150
+  speed: 200
   splash: {fileID: 6500633857814393654, guid: 10838dc4d34fb9d4fb0f0a47c3e77e81, type: 3}
-  contactPowerFactor: 0.001
+  contactPowerFactor: 0.01
   onCollide:
     m_PersistentCalls:
       m_Calls: []
