@@ -1,3 +1,3 @@
 # Project-Tyatya
 
-Little ball game
+Little platformer game
